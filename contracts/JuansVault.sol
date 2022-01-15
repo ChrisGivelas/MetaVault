@@ -28,12 +28,11 @@ contract JuansVault {
         return true;
     }
 
-    function withdraw(
-        address token_erc20,
-        address recipient,
-        uint256 amount
-    ) public returns (bool) {
-        IERC20(token_erc20).transfer(recipient, amount);
+    function withdraw(address token_erc20, uint256 amount)
+        public
+        returns (bool)
+    {
+        IERC20(token_erc20).transfer(owner, amount);
         return true;
     }
 }
