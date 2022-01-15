@@ -5,8 +5,8 @@ async function main() {
   if (network.name === "hardhat") {
     console.warn(
       "You are trying to deploy a contract to the Hardhat Network, which" +
-        "gets automatically created and destroyed every time. Use the Hardhat" +
-        " option '--network localhost'"
+      "gets automatically created and destroyed every time. Use the Hardhat" +
+      " option '--network localhost'"
     );
   }
 
@@ -19,14 +19,14 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
-  await token.deployed();
+  // const Token = await ethers.getContractFactory("Token");
+  // const token = await Token.deploy();
+  // await token.deployed();
 
-  console.log("Token address:", token.address);
+  // console.log("Token address:", token.address);
 
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(token);
+  // saveFrontendFiles(token);
 }
 
 function saveFrontendFiles(token) {
