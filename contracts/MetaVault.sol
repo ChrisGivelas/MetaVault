@@ -29,5 +29,6 @@ contract MetaVault is ERC721 {
 
         vaultAddress = address(new Vault(msg.sender, switchActivationDate));
         vaultOwners[newItemId] = vaultAddress;
+        return vaultAddress;
     }
 }

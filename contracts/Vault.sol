@@ -19,7 +19,8 @@ contract Vault {
     function setDaysTillSwitchActivates(uint256 _daysTillSwitchActivates)
         public
     {
-        require(msg.sender == owner, "This account does not own this vault");
+        // this require does not work upon creation
+        // require(msg.sender == owner, "This account does not own this vault");
         redemptionDateInSeconds =
             block.timestamp +
             (_daysTillSwitchActivates * DAYS_TO_SECONDS);

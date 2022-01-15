@@ -36,7 +36,7 @@ describe('MetaVault contract', () => {
         it('should have the right owner', async () => {
             console.log('yyyy')
             let vault = await hardhatMetavault.createVault(1)
-            console.log('xxxx')
+            console.log('xxxx', vault)
             expect(await vault.owner()).to.equal(owner.address)
         })
     })
