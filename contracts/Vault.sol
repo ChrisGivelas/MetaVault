@@ -2,8 +2,9 @@
 pragma solidity ^0.7.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
-contract JuansVault {
+contract Vault is ERC1155 {
     address public owner;
     address[] tokens_erc20;
 
