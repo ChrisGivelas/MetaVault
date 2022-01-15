@@ -2,14 +2,22 @@
 pragma solidity ^0.7.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-
-contract Vault is ERC1155 {
-    address public owner;
+ 
+contract Vault {
+    uint256 constant DAYS_TO_SECONDS = 1 days * 24 hours * 60 minutes * 60 seconds;
+    address owner;
+    uint256 daysTillSwitchActivates;
     address[] tokens_erc20;
+    address[] beneficiaries;
 
-    constructor() {
-        owner = msg.sender;
+    constructor(address _owner, uint256 _daysTillSwitchActivates) {
+        owner = _owner;
+        setDaysTillSwitchActivates(_daysTillSwitchActivates);
+    }
+
+    function setDaysTillSwitchActivates(uint256 _daysTillSwitchActivates) public {
+        require(msg.sender == owner, "This account does not own this vault");
+        daysTillSwitchActivates = block.timestamp + (_daysTillSwitchActivates * DAYS_TO_SECONDS);
     }
 
     function balanceOf(address token_erc20)
@@ -35,6 +43,14 @@ contract Vault is ERC1155 {
         uint256 amount
     ) public returns (bool) {
         IERC20(token_erc20).transfer(recipient, amount);
+        return true;
+    }
+
+    function claimVault() public returns(bool) {
+        require(block.timestamp > daysTillSwitchActivates * DAYS_TO_SECONDS, "This vault cannot be claimed yet");
+
+        //Finish implementation...
+
         return true;
     }
 }
