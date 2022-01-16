@@ -7,7 +7,11 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "./Vault.sol";
 
 interface IMetaVault {
-    event VaultCreated(address indexed creator, address indexed vaultAddress);
+    event VaultCreated(
+        address indexed creator,
+        address indexed vaultAddress,
+        uint256 tokenId
+    );
 
     function createVault(uint256 switchActivationDate)
         external
@@ -29,12 +33,12 @@ contract MetaVault is ERC721, IMetaVault {
     {
         _tokenIds.increment();
 
-        uint256 newItemId = _tokenIds.current();
-        _mint(_msgSender(), newItemId);
+        uint256 tokenId = _tokenIds.current();
+        _mint(_msgSender(), tokenId);
 
         vaultAddress = address(new Vault(_msgSender(), switchActivationDate));
-        vaultOwners[newItemId] = vaultAddress;
-        emit VaultCreated(_msgSender(), vaultAddress);
+        vaultOwners[tokenId] = vaultAddress;
+        emit VaultCreated(_msgSender(), vaultAddress, tokenId);
         return vaultAddress;
     }
 }

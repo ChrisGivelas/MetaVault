@@ -36,7 +36,8 @@ describe('MetaVault contract', () => {
         it('should have the right owner', async () => {
             let createVaultResponse = hardhatMetavault.createVault(1)
 
-            expect(createVaultResponse).to.emit(hardhatMetavault, 'VaultCreated')
+            await expect(createVaultResponse)
+                .to.emit(hardhatMetavault, 'VaultCreated')
         })
     })
 })
