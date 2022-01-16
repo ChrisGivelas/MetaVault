@@ -3,9 +3,18 @@ pragma solidity ^0.7.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
 import "./Vault.sol";
 
-contract MetaVault is ERC721 {
+interface IMetaVault {
+    event VaultCreated(address indexed creator, address indexed vaultAddress);
+
+    function createVault(uint256 switchActivationDate)
+        external
+        returns (address vaultAddress);
+}
+
+contract MetaVault is ERC721, IMetaVault {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -14,21 +23,18 @@ contract MetaVault is ERC721 {
     constructor() ERC721("Meta Vault NFT", "MV") {}
 
     function createVault(uint256 switchActivationDate)
-        public
+        external
+        override
         returns (address vaultAddress)
     {
-        require(
-            this.balanceOf(msg.sender) == 0,
-            "Account already has a vault token"
-        );
-
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
-        _mint(msg.sender, newItemId);
+        _mint(_msgSender(), newItemId);
 
-        vaultAddress = address(new Vault(msg.sender, switchActivationDate));
+        vaultAddress = address(new Vault(_msgSender(), switchActivationDate));
         vaultOwners[newItemId] = vaultAddress;
+        emit VaultCreated(_msgSender(), vaultAddress);
         return vaultAddress;
     }
 }
