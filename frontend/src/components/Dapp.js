@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
-import TokenArtifact from "../contracts/Token.json";
+import MetaVault from "../contracts/MetaVault.json";
 import contractAddress from "../contracts/contract-address.json";
 
 // All the logic of this dapp is contained in the Dapp component.
@@ -97,11 +97,7 @@ export class Dapp extends React.Component {
               {this.state.tokenData.name} ({this.state.tokenData.symbol})
             </h1>
             <p>
-              Welcome <b>{this.state.selectedAddress}</b>, you have{" "}
-              <b>
-                {this.state.balance.toString()} {this.state.tokenData.symbol}
-              </b>
-              .
+              Welcome to MetaVault, <b>{this.state.selectedAddress}</b>!
             </p>
           </div>
         </div>

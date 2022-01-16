@@ -26,7 +26,7 @@ contract MetaVault is ERC721, IMetaVault {
 
     constructor() ERC721("Meta Vault NFT", "MV") {}
 
-    function createVault(uint256 switchActivationDate)
+    function createVault(uint256 daysTillSwitchActivates)
         external
         override
         returns (address vaultAddress)
@@ -36,7 +36,7 @@ contract MetaVault is ERC721, IMetaVault {
         uint256 tokenId = _tokenIds.current();
         _mint(_msgSender(), tokenId);
 
-        vaultAddress = address(new Vault(_msgSender(), switchActivationDate));
+        vaultAddress = address(new Vault(_msgSender(), daysTillSwitchActivates));
         vaultOwners[tokenId] = vaultAddress;
         emit VaultCreated(_msgSender(), vaultAddress, tokenId);
         return vaultAddress;

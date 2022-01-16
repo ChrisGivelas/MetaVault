@@ -34,11 +34,10 @@ contract Vault {
         }
     }
 
-    constructor(address _owner) {
+    constructor(address _owner, uint256 daysTillSwitchActivates) {
         owner = _owner;
-        isRollingClaimableDate = true;
-        // Defaults to a claimability window of 100 days
-        rollingClaimableWindowSeconds = 100 * DAYS_TO_SECONDS;
+        isRollingClaimableDate = false;
+        claimableDateInSeconds = block.timestamp + (daysTillSwitchActivates * DAYS_TO_SECONDS);
         claimed = false;
     }
 
