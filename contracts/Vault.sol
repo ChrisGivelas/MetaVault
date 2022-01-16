@@ -111,7 +111,7 @@ contract Vault {
 
     function claimVault() 
         public
-        returns(bool)
+        returns(bool success)
     {
         require(beneficiaries[msg.sender], "This account is not a beneficiary of this vault");
         require(block.timestamp > claimableDateInSeconds, "This vault cannot be claimed yet");
@@ -121,9 +121,7 @@ contract Vault {
             withdraw(tokens_erc20[i], balanceOf(tokens_erc20[i]));
         }
 
-        claimed = true;
+        claimed = success = true;
         emit ClaimVault(msg.sender);
-
-        return true;
     }
 }
